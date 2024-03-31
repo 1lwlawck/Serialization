@@ -17,6 +17,14 @@ public class product implements Serializable {
     private String nama;
     private List<productItem> items;
 
+    product(String nama, String iditem, String kategori, String jenisitem, int harga) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    product() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
     public void setId(String id) {
         this.id = id;
     }
@@ -40,6 +48,18 @@ public class product implements Serializable {
         item = items.stream().map((obj)
                 -> obj.toString()).reduce(item, String::concat);
         return produk + item;
+    }
+
+    void setId_Produk(String id_produk) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    void setNama_Game(String nama_produk) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    void setProduct(List<product> p) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
 }

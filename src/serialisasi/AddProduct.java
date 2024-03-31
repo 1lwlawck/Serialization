@@ -22,6 +22,14 @@ public class AddProduct extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
     }
+    
+        public void initTabel(){
+        model = new javax.swing.table.DefaultTableModel(
+                new Object[][][][][]{},
+                new String []{"Nama","ID Item","Kategori","Jenis Item","Harga"}
+        );
+        tblData.setModel(model);
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -35,7 +43,7 @@ public class AddProduct extends javax.swing.JDialog {
         jPanel2 = new javax.swing.JPanel();
         jComboBox1 = new javax.swing.JComboBox<>();
         jPanel1 = new javax.swing.JPanel();
-        txtId = new javax.swing.JTextField();
+        txtIdproduk = new javax.swing.JTextField();
         txtNamaProduk = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -47,7 +55,7 @@ public class AddProduct extends javax.swing.JDialog {
         jLabel5 = new javax.swing.JLabel();
         btnTambah = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tblData = new javax.swing.JTable();
         btnSimpan = new javax.swing.JButton();
         txtJenisItem = new javax.swing.JTextField();
         txtKategori = new javax.swing.JTextField();
@@ -101,7 +109,7 @@ public class AddProduct extends javax.swing.JDialog {
             }
         });
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tblData.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -112,9 +120,14 @@ public class AddProduct extends javax.swing.JDialog {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tblData);
 
         btnSimpan.setText("SIMPAN DATA KE DALAM KOLEKSI");
+        btnSimpan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSimpanActionPerformed(evt);
+            }
+        });
 
         jLabel7.setText("ID ITEM");
 
@@ -214,7 +227,7 @@ public class AddProduct extends javax.swing.JDialog {
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel1)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(txtIdproduk, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel2)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -229,7 +242,7 @@ public class AddProduct extends javax.swing.JDialog {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtIdproduk, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -266,7 +279,46 @@ public class AddProduct extends javax.swing.JDialog {
 
     private void btnTambahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTambahActionPerformed
         // TODO add your handling code here:
+         String txtid_produk = txtIdproduk.getText();
+        String txtnama_produk = txtNamaProduk.getText();
+        String txt = txtPassword.getText();
+        String txt_usia = txtUsia.getText();
+        String txt_email = txtEmail.getText();
+        Object [] item = {txt_id_player,txt_nama_player,txt_pasword,txt_usia,txt_email};
+        model.addRow(item);
     }//GEN-LAST:event_btnTambahActionPerformed
+
+    private void btnSimpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSimpanActionPerformed
+        // TODO add your handling code here:
+         String nama_produk = txtNamaProduk.getText();
+        String id_produk = txtIdproduk.getText();
+        int row = tblData.getRowCount();
+        
+        if(id_produk.isEmpty() || nama_produk.isEmpty()){
+            JOptionPane.showMessageDialog(this, "Mohon Lengkapi data Product !");
+        }else if(row == 0){
+            JOptionPane.showMessageDialog(this, "Item masih kosong !");
+        }else{
+            List<product> p = new ArrayList<>();
+            for (int i = 0 ; i<row; i++){
+                String nama = tblData.getValueAt(i, 0).toString();
+                String iditem = tblData.getValueAt(i, 1).toString();
+                String kategori = tblData.getValueAt(i, 2).toString();
+                String jenisitem = tblData.getValueAt(i, 3).toString();
+                String hargaStr = tblData.getValueAt(i, 4).toString();
+                int harga = Integer.parseInt(hargaStr); // Mengonversi hargaStr menjadi integer
+                product pi = new product (nama, iditem, kategori, jenisitem, harga);
+                p.add(pi);
+            }
+            MainForm.product.setId_Produk(id_produk);
+            MainForm.product.setNama_Game(nama_produk);
+            MainForm.product.setProduct(p);
+            
+            this.dispose();
+            JOptionPane.showMessageDialog(this, "Data Player telah disimpan");
+            
+        }
+    }//GEN-LAST:event_btnSimpanActionPerformed
 
     /**
      * @param args the command line arguments
@@ -329,10 +381,10 @@ public class AddProduct extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable tblData;
     private javax.swing.JTextField txtHargaItem;
-    private javax.swing.JTextField txtId;
     private javax.swing.JTextField txtIdItem;
+    private javax.swing.JTextField txtIdproduk;
     private javax.swing.JTextField txtJenisItem;
     private javax.swing.JTextField txtKategori;
     private javax.swing.JTextField txtNamaItem;
